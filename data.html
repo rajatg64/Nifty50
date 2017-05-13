@@ -1,0 +1,125 @@
+<html>
+<head>
+  <meta name=viewport content="width=device-width, initial-scale=1">
+<!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+<link rel="stylesheet" href="css/style.css">
+<style>
+body {
+  background: #3e464c;
+  margin: 0px;
+  padding: 0px;
+}
+div {
+   box-sizing: border-box;
+}
+.container {
+  width: 100%;
+  /*background: #ccc;*/
+  border: #000;
+  margin: 0 auto;
+  /*padding: 50px 25px;*/
+  overflow: auto;
+}
+
+.col {
+  float: left;
+  width: 100%;
+}
+.tile {
+  width: 100%;
+  color: #ccc;
+}
+
+.purple-tile {
+  background: #7539a9;
+}
+.purple-tile .tile-head {
+  background: #757575;
+}
+.red-tile {
+  background: #f44336;
+}
+.red-tile .tile-head {
+  background: #795548;
+}
+.green-tile {
+  background: #388e3c;
+}
+.green-tile .tile-head {
+  background: #212121;
+}
+.orange-tile {
+  background: #ff5722;
+}
+.orange-tile .tile-head {
+  background: #f57c00;
+}
+
+.tile .tile-head {
+  text-align: center;
+  padding: 5px;
+  color: #fff;
+}
+.tile .tile-body .attribs {
+  padding: 0 15px;
+}
+.tile .tile-body .attribs li {
+  list-style-type: none;
+}
+.tile .tile-body .attribs li b {
+  color: #757575;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1300px) {
+  .col {
+    width: 45%;
+    margin: 10px 10px;
+  }
+}
+@media screen and (min-width: 1300px) {
+  .col {
+    width: 23%;
+    margin: 10px 10px;
+  }
+}
+.header{
+  background-color: white;
+  color: black;
+  text-align: center;
+  height: 25px;
+  font-size: 25px;
+}
+</style>
+</head>
+   <body>
+     <div class="header">
+       <p> Top 10 'Nifty 50'</p>
+     </div>
+     <div class="container">
+     % for i,d in enumerate(data["data"]):
+     <div class="col">
+        <div class="tile ${data['list'][i]}">
+          <div class="tile-head">
+            ${i+1}: ${ d['symbol']}
+          </div>
+          <div class="tile-body">
+            <ul class="attribs">
+              <li>Last traded price :${d['ltp']} </li>
+              <li>Traded quantity :${d['tradedQuantity']} </li>
+              <li>Value (InLakhs) :${d['turnoverInLakhs']} </li>
+              <li>Open :${d['openPrice']} </li>
+              <li>High :${d['highPrice']} </li>
+              <li>Low :${d['lowPrice']} </li>
+              <li>Previous close :${d['previousPrice']} </li>
+              <li>Latest Ex date :${d['lastCorpAnnouncementDate']} </li>
+              <!-- <li>series:${d['series']} </li>
+              <li>netPrice:${d['netPrice']} </li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+      % endfor
+
+     </div>
+   </body>
+</html>
