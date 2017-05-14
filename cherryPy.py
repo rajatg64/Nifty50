@@ -1,5 +1,4 @@
 import cherrypy
-import redis
 import random
 import json
 from urllib.request import urlopen
@@ -13,14 +12,9 @@ class Nifty50(object):
     def getData(self):
         url = 'https://www.nseindia.com/live_market/dynaContent/live_analysis/gainers/niftyGainers1.json'
         req = urllib.request.Request(url,headers={'User-Agent': 'Mozilla/5.0'})
-        html = urllib.request.urlopen(req).readall().decode('utf-8')
+        html = urllib.request.urlopen(req).read().decode('utf-8')
         jsondata = json.loads(html)
-        threading.Timer(300.0, self.getData).start()
-        return jsondata
-
-    @cherrypy.expose
-    def index(self):
-        niftyData=self.getData()
+        #code to get different color for tiles
         list = []
         tempList=[]
         for i in range(10):
@@ -30,8 +24,6 @@ class Nifty50(object):
                     tempList.append(num)
                     x=num
                     break
-
-            # x = random.randrange(4)
             if x == 1:
                 list.append('green-tile')
             elif x == 2:
@@ -41,9 +33,17 @@ class Nifty50(object):
             else:
                 list.append('purple-tile')
 
-        niftyData['list']=list
+        jsondata['list']=list
+        #storing data into rediswork instance
         root=Root()
-        root.data=niftyData
+        root.data=jsondata
+        #this thread will get executed after every 5  min
+        threading.Timer(300.0, self.getData).start()
+        return root
+
+    @cherrypy.expose
+    def index(self):
+        root=self.getData()
         output=Template(filename="data.html").render(data=root.data)
         return output
 
