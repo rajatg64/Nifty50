@@ -1,0 +1,7 @@
+cherrypy==3.8.0
+gunicorn==19.6.0
+psycopg2==2.6.2
+whitenoise==2.0.6
+redis==2.10.5
+redisworks==0.2.7
+mako==1.0.6
